@@ -1,4 +1,4 @@
-# Harctoolboxbundle
+# Harctoolboxbundle [![Build Status](https://travis-ci.org/probonopd/harctoolboxbundle.svg)](https://travis-ci.org/probonopd/harctoolboxbundle)
 IrScrutinizer is a powerful program for capturing, generating,
 analyzing, importing, and exporting of infrared (IR) signals.
 
