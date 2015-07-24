@@ -23,8 +23,7 @@ script:
 - ./tools/build-wakeonlan.sh 
 - mvn package
 - ls -lh ./IrScrutinizer/target/IrScrutinizer-bin.zip
-before_deploy:
-git fetch --tags
+before_deploy: git fetch --tags
 deploy:
 provider: releases
 api_key:
