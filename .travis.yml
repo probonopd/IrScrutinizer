@@ -9,7 +9,7 @@ env:
 global:
 install:
 - sudo apt-get update -qq
-- sudo apt-get install libtool subversion maven g++ openjdk-7-jdk dos2unix icoutils python-magic python-requests -qq
+- sudo apt-get install libtool subversion maven g++ openjdk-7-jdk dos2unix icoutils python-requests -qq
 - git clone https://github.com/probonopd/harctoolboxbundle.git
 script:
 - cd ./harctoolboxbundle
@@ -24,6 +24,7 @@ script:
 - mvn package
 - ls -lh ./IrScrutinizer/target/IrScrutinizer-bin.zip
 - wget https://gist.githubusercontent.com/probonopd/cf63b703f7f88c8f55df/raw/travis2github.py
+- wget https://gist.githubusercontent.com/probonopd/cf63b703f7f88c8f55df/raw/magic.py
 - python travis2github.py ./IrScrutinizer/target/IrScrutinizer-bin.zip
 before_deploy: git fetch --tags
 deploy:
