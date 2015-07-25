@@ -17,9 +17,9 @@ script:
 - ./tools/build-exchangeir.sh 
 - ./tools/build-jcommander.sh
 - ./tools/build-minimal-json.sh 
-- sudo mkdir -p /etc/alternatives/java_sdk/jre/lib/amd64/
-- sudo ln -s /usr/lib/amd64/libjava.so /etc/alternatives/java_sdk/jre/lib/amd64/
-- ./tools/build-tonto.sh 
+#- sudo mkdir -p /etc/alternatives/java_sdk/jre/lib/amd64/
+#- sudo ln -s /usr/lib/amd64/libjava.so /etc/alternatives/java_sdk/jre/lib/amd64/
+#- ./tools/build-tonto.sh 
 - ./tools/build-wakeonlan.sh 
 - mvn package
 - ls -lh ./IrScrutinizer/target/IrScrutinizer-bin.zip
