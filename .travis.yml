@@ -19,7 +19,7 @@ script:
 - ./tools/build-minimal-json.sh 
 - sudo mkdir -p /etc/alternatives/java_sdk/jre/lib/amd64/
 - sudo ln -s /usr/lib/amd64/libjava.so /etc/alternatives/java_sdk/jre/lib/amd64/
-- ./tools/build-tonto.sh || :
+- ./tools/build-tonto.sh || echo "continuing"
 - ./tools/build-wakeonlan.sh 
 - mvn package
 - ls -lh ./IrScrutinizer/target/IrScrutinizer-bin.zip
