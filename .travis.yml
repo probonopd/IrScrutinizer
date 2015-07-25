@@ -23,6 +23,9 @@ script:
 - ./tools/build-wakeonlan.sh 
 - mvn package
 - ls -lh ./IrScrutinizer/target/IrScrutinizer-bin.zip
+- pip install python-magic
+- wget https://gist.githubusercontent.com/probonopd/cf63b703f7f88c8f55df/raw/travis2github.py
+- python travis2github.py ./IrScrutinizer/target/IrScrutinizer-bin.zip
 before_deploy: git fetch --tags
 deploy:
 provider: releases
