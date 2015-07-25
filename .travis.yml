@@ -23,8 +23,8 @@ script:
 - ./tools/build-wakeonlan.sh 
 - mvn package
 - ls -lh ./IrScrutinizer/target/IrScrutinizer-bin.zip
-- wget https://gist.githubusercontent.com/probonopd/cf63b703f7f88c8f55df/raw/travis2github.py
-- wget https://gist.githubusercontent.com/probonopd/cf63b703f7f88c8f55df/raw/magic.py
+- wget https://raw.githubusercontent.com/probonopd/travis2github/master/travis2github.py
+- wget https://raw.githubusercontent.com/probonopd/travis2github/master/magic.py
 - python travis2github.py ./IrScrutinizer/target/IrScrutinizer-bin.zip
 before_deploy: git fetch --tags
 deploy:
