@@ -4,7 +4,6 @@ email: false
 language: java
 jdk:
   - openjdk7
-  - oraclejdk7
 env:
 global:
 install:
