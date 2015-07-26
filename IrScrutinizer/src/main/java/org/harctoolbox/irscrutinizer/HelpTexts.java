@@ -146,6 +146,22 @@ class HelpTexts {
             + fileImportHelp + "\n\n"
             + "When pressing the \"Load File\" button, " + treeHelp;
 
+    public static String importCmlHelp
+            = "Many CML files are available in Internet, in particular by RemoteCentral. "
+            + "Particularly noteworthy is the \"megalist\", http://files.remotecentral.com/collection/66-1/index.html. "
+            + "IrScrutinizer can import these files to its import tree, "
+            + "making every remote a nodes in the tree.\n\n"
+            + fileImportHelp + "\n\n"
+            + "When pressing the \"Load File\" button, " + treeHelp;
+
+    public static String importCommandFusionHelp
+            = "The native format for CommandFusion equipment (for example, their freely available IR Learner) "
+            + "is a Json based text format, having the file extension \".cfir\". "
+            + "IrScrutinizer can read in these files to its import tree, "
+            + "making every remote a nodes in the tree.\n\n"
+            + "When pressing one of the \"Load\", \"Load File/URL\", or \"Load from clipboard\" buttons, "
+            + treeHelp;
+
     public static String importIctHelpHelp
             = "The ICT format, introduced by Kevin Timmerman's  IrScope, contains one or many IR signals, "
             + "optionally with names.\n\n"
@@ -373,4 +389,12 @@ class HelpTexts {
 
     public static String sendingGenericSerialPortHelp
             = "This pane contains the controls for sending a signal in a general format to one of the serial ports available on the system.";
+
+    public static String sendingGirsHelp = "TODO";
+
+    public static String sendingCommandFusionHelp = "With this pane, a CommandFusion Learner can be used for transmitting IR signals.";
+
+    public static String capturingGirsHelp = "TODO";
+
+    public static String capturingCommandFusionHelp = "With this pane, a CommandFusion Learner can be used for capturing IR signals.";
 }

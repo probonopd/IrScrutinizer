@@ -19,9 +19,14 @@ package org.harctoolbox.irscrutinizer.importer;
 
 import java.awt.Component;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.Map.Entry;
 import javax.swing.JTree;
+import javax.swing.event.TreeExpansionEvent;
+import javax.swing.event.TreeExpansionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
@@ -41,11 +46,32 @@ import org.harctoolbox.irscrutinizer.HardwareUnavailableException;
  */
 
 @SuppressWarnings("serial")
-public class TreeImporter extends javax.swing.JPanel {
+public class TreeImporter extends javax.swing.JPanel implements TreeExpansionListener {
     private GuiUtils guiUtils;
     private GuiMain guiMain = null;
     private DefaultMutableTreeNode root;
     private RemoteSet remoteSet;
+
+    @Override
+    public void treeExpanded(TreeExpansionEvent event) {
+        DefaultMutableTreeNode remote = (DefaultMutableTreeNode) event.getPath().getLastPathComponent();
+        if (!Remote.class.isInstance(remote.getUserObject())) // Just to be on the safe side...
+            return;
+
+        for (Enumeration e = remote.children(); e.hasMoreElements();) {
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode) e.nextElement();
+            Command command = (Command) node.getUserObject();
+            try {
+                command.checkForParameters(); // decode the commands, if possible
+            } catch (IrpMasterException ex) {
+               // nothing to do...
+            }
+        }
+    }
+
+    @Override
+    public void treeCollapsed(TreeExpansionEvent event) {
+    }
 
     /**
      * Creates new form TreeImporter
@@ -53,6 +79,7 @@ public class TreeImporter extends javax.swing.JPanel {
     public TreeImporter() {
         initComponents();
         tree.setCellRenderer(new MyRenderer());
+        tree.addTreeExpansionListener(this);
     }
 
     /**
@@ -110,7 +137,10 @@ public class TreeImporter extends javax.swing.JPanel {
 
     private DefaultTreeModel newTreeModel() {
         root = new DefaultMutableTreeNode("Remotes");
-        for (Remote remote : remoteSet.getRemotes()) {
+        Collection<Remote> remotes = remoteSet.getRemotes();
+        ArrayList<Remote> remoteList = new ArrayList<Remote>(remotes);
+        Collections.sort(remoteList, new Remote.compareNameCaseInsensitive());
+        for (Remote remote : remoteList) {
             DefaultMutableTreeNode node = newRemoteNode(remote);
             root.add(node);
         }

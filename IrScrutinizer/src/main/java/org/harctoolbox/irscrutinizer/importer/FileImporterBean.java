@@ -269,7 +269,14 @@ public class FileImporterBean<T extends IFileImporter & IImporter>  extends java
         if (filenameTextField.getText().isEmpty())
             return;
 
+        Cursor oldCursor = getCursor();
+        repaint();
         try {
+            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException ex) {
+            }
             RemoteSet remoteSet = remoteSetImporterLoadFile();
             treeImporter.setRemoteSet(remoteSet);
         } catch (IOException ex) {
@@ -284,6 +291,8 @@ public class FileImporterBean<T extends IFileImporter & IImporter>  extends java
         } catch (UnsupportedOperationException ex) {
             treeImporter.clear();
             guiUtils.error(ex);
+        } finally {
+            setCursor(oldCursor);
         }
     }//GEN-LAST:event_loadFileButtonActionPerformed
 
