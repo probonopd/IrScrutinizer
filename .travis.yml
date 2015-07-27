@@ -4,8 +4,6 @@ email: false
 language: java
 jdk:
   - openjdk7
-env:
-global:
 install:
 - sudo apt-get update -qq
 - sudo apt-get install libtool subversion maven g++ openjdk-7-jdk dos2unix icoutils python-requests -qq
