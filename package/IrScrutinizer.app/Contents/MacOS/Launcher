@@ -9,4 +9,4 @@ JAVA=java
 
 LIBRARY_PATH="${RES}/lib"
 
-exec "${JAVA}" -Djava.library.path="${LIBRARY_PATH}" -jar "${RES}/IrScrutinizer.jar" -p "${HOME}/.IrScrutinizer.properties.xml" "$@"
+exec "${JAVA}" -Djava.library.path="${LIBRARY_PATH}" -jar "${RES}/IrScrutinizer-jar-with-dependencies.jar" -p "${HOME}/.IrScrutinizer.properties.xml" "$@"
