@@ -1,0 +1,12 @@
+#!/bin/bash
+
+HERE=$(cd "$(dirname "$0")"; pwd)
+
+RES="${HERE}/../Resources"
+
+# Set to the preferred Java VM
+JAVA=java
+
+LIBRARY_PATH="${RES}/lib"
+
+exec "${JAVA}" -Djava.library.path="${LIBRARY_PATH}" -jar "${RES}/IrScrutinizer.jar" -p "${HOME}/.IrScrutinizer.properties.xml" "$@"
