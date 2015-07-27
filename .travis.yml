@@ -9,9 +9,9 @@ global:
 install:
 - sudo apt-get update -qq
 - sudo apt-get install libtool subversion maven g++ openjdk-7-jdk dos2unix icoutils python-requests -qq
-- git clone https://github.com/probonopd/harctoolboxbundle.git
+- git clone https://github.com/probonopd/IrScrutinizer.git
 script:
-- cd ./harctoolboxbundle
+- cd ./IrScrutinizer
 - ./tools/build-decodeir.sh 
 - ./tools/build-exchangeir.sh 
 - ./tools/build-jcommander.sh
@@ -23,7 +23,7 @@ script:
 - mvn package
 - ls -lh ./IrScrutinizer/target/IrScrutinizer-bin.zip
 - cd "./package/IrScrutinizer.app/Contents/Resources"
-- unzip ../../../../IrScrutinizer/target/IrScrutinizer-bin.zip .
+- unzip ../../../../IrScrutinizer/target/IrScrutinizer-bin.zip
 - cd -
 - cd ./package
 - zip -r IrScrutinizer.app.zip IrScrutinizer.app
@@ -38,7 +38,7 @@ api_key: e1qiIqcPPMVwziD3msCV3ww91TeeANQ96btn3LxYIk0WDoN89oCc1GOtmHEb2/PgtAT0OCX
 secure: 
 skip_cleanup: true
 file_glob: true
-file: $TRAVIS_BUILD_DIR/harctoolboxbundle/IrScrutinizer/target/IrScrutinizer-bin.zip
+file: $TRAVIS_BUILD_DIR/IrScrutinizer/IrScrutinizer/target/IrScrutinizer-bin.zip
 on:
 tags: true
 all_branches: true
