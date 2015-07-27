@@ -23,7 +23,7 @@ script:
 - mvn package
 - ls -lh ./IrScrutinizer/target/IrScrutinizer-bin.zip
 - cd "./package/IrScrutinizer.app/Contents/Resources"
-- unzip ../../../../target/IrScrutinizer-bin.zip .
+- unzip ../../../../IrScrutinizer/target/IrScrutinizer-bin.zip .
 - cd -
 - cd ./package
 - zip -r IrScrutinizer.app.zip IrScrutinizer.app
