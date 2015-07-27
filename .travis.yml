@@ -26,4 +26,4 @@ script:
 - cd -
 - wget https://raw.githubusercontent.com/probonopd/travis2github/master/travis2github.py
 - wget https://raw.githubusercontent.com/probonopd/travis2github/master/magic.py
-- python travis2github.py ./IrScrutinizer/target/IrScrutinizer-bin.zip ./package/IrScrutinizer.app
+- python travis2github.py ./IrScrutinizer/target/IrScrutinizer-bin.zip ./package/IrScrutinizer.app.zip
