@@ -25,6 +25,8 @@
         <url>http://www.harctoolbox.org</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
     <distributionManagement>
         <repository>
@@ -173,11 +175,6 @@
             <groupId>org.harctoolbox</groupId>
             <artifactId>IrpMaster</artifactId>
             <version>1.0.3</version>
-        </dependency>
-        <dependency>
-            <groupId>de.moldaner</groupId>
-            <artifactId>wakeonlan</artifactId>
-            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>com.eclipsesource.minimal-json</groupId>
