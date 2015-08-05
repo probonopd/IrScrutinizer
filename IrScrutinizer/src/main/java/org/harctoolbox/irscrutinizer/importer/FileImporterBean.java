@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2013 Bengt Martensson.
+Copyright (C) 2013, 2015 Bengt Martensson.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -252,6 +252,8 @@ public class FileImporterBean<T extends IFileImporter & IImporter>  extends java
                 properties.getDefaultImportDir(), false, false, selectionType, filetypes);
         if (importFile != null) {
             filenameTextField.setText(importFile.getPath());
+            // Tell the user that the data in the tree importer is obsolete.
+            treeImporter.clear();
             try {
                 properties.setDefaultImportDir(importFile.getParentFile().getCanonicalPath());
             } catch (IOException ex) {
@@ -279,16 +281,7 @@ public class FileImporterBean<T extends IFileImporter & IImporter>  extends java
             }
             RemoteSet remoteSet = remoteSetImporterLoadFile();
             treeImporter.setRemoteSet(remoteSet);
-        } catch (IOException ex) {
-            treeImporter.clear();
-            guiUtils.error(ex);
-        } catch (ParseException ex) {
-            treeImporter.clear();
-            guiUtils.error(ex);
-        } catch (IrpMasterException ex) {
-            treeImporter.clear();
-            guiUtils.error(ex);
-        } catch (UnsupportedOperationException ex) {
+        } catch (IOException | ParseException | IrpMasterException | UnsupportedOperationException ex) {
             treeImporter.clear();
             guiUtils.error(ex);
         } finally {
@@ -309,11 +302,7 @@ public class FileImporterBean<T extends IFileImporter & IImporter>  extends java
         try {
             RemoteSet remoteSet = remoteSetImporterLoadClipboard();
             treeImporter.setRemoteSet(remoteSet);
-        } catch (IOException ex) {
-            guiUtils.error(ex);
-        } catch (IrpMasterException ex) {
-            guiUtils.error(ex);
-        } catch (ParseException ex) {
+        } catch (IOException | IrpMasterException | ParseException ex) {
             guiUtils.error(ex);
         }
     }//GEN-LAST:event_loadClipboardButtonActionPerformed

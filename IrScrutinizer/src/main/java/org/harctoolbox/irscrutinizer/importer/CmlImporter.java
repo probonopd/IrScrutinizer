@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.Serializable;
-import java.nio.charset.Charset;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
@@ -45,9 +44,9 @@ import org.harctoolbox.irscrutinizer.Version;
 public class CmlImporter extends RemoteSetImporter implements IFileImporter, Serializable {
     private static final long serialVersionUID = 1L;
 
-    String charactersetName = "WINDOWS-1252";
-    Charset characterSet = Charset.forName(charactersetName);
-
+    // I have no idea of a/the correct character set in the CML files.
+    // Therefore, select the largest of the 8 bit character sets.
+    private final String charactersetName = "WINDOWS-1252";
     private static final int remoteToken = 0xbbbbbbbb;
     private static final int commandToken = 0xcccccccc;
     private static final int EOF = -1;
@@ -62,13 +61,15 @@ public class CmlImporter extends RemoteSetImporter implements IFileImporter, Ser
     //}
 
     @Override
-    public void load(Reader reader, String origin) throws IOException, ParseException, IrpMasterException {
+    public void load(Reader reader, String origin) throws IOException, ParseException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void load(File file, String origin) throws IOException, ParseException, IrpMasterException {
-        load(new FileInputStream(file), origin);
+    public void load(File file, String origin) throws IOException, ParseException {
+        try (FileInputStream fileInputStream = new FileInputStream(file)) {
+            load(fileInputStream, origin);
+        }
     }
 
     //@Override
@@ -77,14 +78,14 @@ public class CmlImporter extends RemoteSetImporter implements IFileImporter, Ser
     //}
 
     @Override
-    public void load(InputStream reader, String origin) throws IOException, ParseException, IrpMasterException {
+    public void load(InputStream reader, String origin) throws IOException, ParseException {
         prepareLoad(origin);
         remoteSet = parseRemoteSet(reader, origin);
         setupCommands();
     }
 
-    private RemoteSet parseRemoteSet(InputStream inputStream, String origin) throws IOException, ParseException, IrpMasterException {
-        HashMap<String, Remote> remotes = new HashMap<String, Remote>();
+    private RemoteSet parseRemoteSet(InputStream inputStream, String origin) throws IOException, ParseException {
+        HashMap<String, Remote> remotes = new HashMap<>();
         while (true) {
             int token = searchToken(inputStream);
             if (token == remoteToken)
@@ -126,7 +127,7 @@ public class CmlImporter extends RemoteSetImporter implements IFileImporter, Ser
         }
     }
 
-    private Remote parseRemote(InputStream inputStream) throws IOException, IrpMasterException {
+    private Remote parseRemote(InputStream inputStream) throws IOException {
         long status = inputStream.skip(12);
         if (status != 12)
             return null;//throw new IOException("to short skip");
@@ -135,7 +136,7 @@ public class CmlImporter extends RemoteSetImporter implements IFileImporter, Ser
         String kind = getString(inputStream, 21);
         String model = getString(inputStream, 21);
         String remoteName = vendor + "_" + kind + "_" + model;
-        HashMap<String, Command> commands = new LinkedHashMap<String, Command>();
+        HashMap<String, Command> commands = new LinkedHashMap<>();
         while (true) {
             int token = searchToken(inputStream);
             if (token != commandToken)
@@ -151,7 +152,7 @@ public class CmlImporter extends RemoteSetImporter implements IFileImporter, Ser
         return new Remote(remoteName, vendor, model, kind, null, null, null, commands, null);
     }
 
-    private Command parseCommand(InputStream inputStream, String remoteName) throws IOException, IrpMasterException {
+    private Command parseCommand(InputStream inputStream, String remoteName) throws IOException {
         byte[] x = getBytes(inputStream, 23);
         int wav = byte2unsigned(x[9]) + 256 * byte2unsigned(x[10]);
         int frequency = wav != 0 ? 1000000000 / wav : 0;
@@ -207,7 +208,7 @@ public class CmlImporter extends RemoteSetImporter implements IFileImporter, Ser
 
     private String getString(InputStream in, int length) throws IOException {
         byte buf[] = getBytes(in, length);
-        String str = new String(buf, characterSet);
+        String str = new String(buf, charactersetName); //throws UnsupportedEncodingException, subclass of IOException
         int n = str.indexOf(0);
         return n == -1 ? str.trim() : str.substring(0, n).trim();
     }
@@ -241,9 +242,7 @@ public class CmlImporter extends RemoteSetImporter implements IFileImporter, Ser
             Logger.getLogger(CmlImporter.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(CmlImporter.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(CmlImporter.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IrpMasterException ex) {
+        } catch (ParseException | IrpMasterException ex) {
             Logger.getLogger(CmlImporter.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
