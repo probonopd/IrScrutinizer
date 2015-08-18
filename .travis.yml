@@ -14,9 +14,9 @@ script:
 - ./tools/build-jcommander.sh
 - ./tools/build-minimal-json.sh
 - ./tools/build-java-readline.sh
-- sudo mkdir -p /etc/alternatives/java_sdk/jre/lib/amd64/
-- sudo ln -s /usr/lib/amd64/libjava.so /etc/alternatives/java_sdk/jre/lib/amd64/
-- ./tools/build-tonto.sh || echo "continuing"
+- # sudo mkdir -p /etc/alternatives/java_sdk/jre/lib/amd64/
+- # sudo ln -s /usr/lib/amd64/libjava.so /etc/alternatives/java_sdk/jre/lib/amd64/
+- ./tools/build-tonto.sh -n # || echo "continuing"
 - mvn package
 - ls -lh ./IrScrutinizer/target/IrScrutinizer-bin.zip
 - cd "./package/IrScrutinizer.app/Contents/Resources"
