@@ -1,0 +1,18 @@
+version: 1.0.{build}
+
+install:
+  - set MAVEN_VERSION=3.2.5
+  - choco install maven -version %MAVEN_VERSION%
+  - set PATH=%PATH%;C:\bin\apache-maven-%MAVEN_VERSION%\bin
+  - set JAVA_HOME=C:\Program Files (x86)\Java\jdk1.8.0
+
+build_script:
+  - ./tools/build-decodeir.sh 
+  - ./tools/build-exchangeir.sh 
+  - ./tools/build-jcommander.sh
+  - ./tools/build-minimal-json.sh
+  - ./tools/build-java-readline.sh
+  - sudo mkdir -p /etc/alternatives/java_sdk/jre/lib/amd64/
+  - sudo ln -s /usr/lib/amd64/libjava.so /etc/alternatives/java_sdk/jre/lib/amd64/
+  - ./tools/build-tonto.sh 
+  - mvn package
