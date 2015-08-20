@@ -19,12 +19,13 @@ script:
 - ./tools/build-tonto.sh -n # || echo "continuing"
 - mvn package
 - ls -lh ./IrScrutinizer/target/IrScrutinizer-bin.zip
-- cd "./package/IrScrutinizer.app/Contents/Resources"
-- unzip ../../../../IrScrutinizer/target/IrScrutinizer-bin.zip
-- cd -
-- cd ./package
-- zip -r IrScrutinizer.app.zip IrScrutinizer.app
-- cd -
+- ./tools/mkapp.sh
+- # cd "./package/IrScrutinizer.app/Contents/Resources"
+- # unzip ../../../../IrScrutinizer/target/IrScrutinizer-bin.zip
+- # cd -
+- # cd ./package
+- # zip -r IrScrutinizer.app.zip IrScrutinizer.app
+- # cd -
 - wget https://raw.githubusercontent.com/probonopd/travis2github/master/travis2github.py
 - wget https://raw.githubusercontent.com/probonopd/travis2github/master/magic.py
-- python travis2github.py ./IrScrutinizer/target/IrScrutinizer-bin.zip ./package/IrScrutinizer.app.zip
+- python travis2github.py ./IrScrutinizer/target/IrScrutinizer-bin.zip ./IrScrutinizer.app.zip
