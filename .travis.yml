@@ -19,7 +19,7 @@ script:
 - ./tools/build-tonto.sh -n # || echo "continuing"
 - mvn package
 - ls -lh ./IrScrutinizer/target/IrScrutinizer-bin.zip
-- bash -x ./tools/mkapp.sh IrScrutinizer dev
+- find . -name *app
 - # cd "./package/IrScrutinizer.app/Contents/Resources"
 - # unzip ../../../../IrScrutinizer/target/IrScrutinizer-bin.zip
 - # cd -
